@@ -2,46 +2,57 @@
 <html lang="de">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>WM 2026 Reiseplanung</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="preconnect" href="https://api.open-meteo.com" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="dashboard">
-  <div id="loginOverlay" class="overlay">
-    <div class="login-card card">
+  <div id="loginOverlay" class="overlay" aria-modal="true" role="dialog">
+    <div class="login-card glass-card">
+      <p class="eyebrow">Roadtrip-Planer</p>
       <h1>WM 2026 Reiseplanung</h1>
-      <p class="muted">Komfortschutz für die Roadtrip-Planung</p>
-      <form id="loginForm" novalidate>
+      <p class="muted">Komfortschutz aktiv</p>
+      <form id="loginForm" class="stack" novalidate>
         <label for="passwordInput">Passwort</label>
-        <input id="passwordInput" type="password" placeholder="Passwort eingeben" autocomplete="current-password" required />
-        <button type="submit" class="btn btn-primary">Dashboard entsperren</button>
+        <input id="passwordInput" type="password" autocomplete="current-password" placeholder="••••••••••" required />
+        <button type="submit" class="btn btn-primary">Dashboard öffnen</button>
         <p id="loginError" class="error-msg" aria-live="polite"></p>
       </form>
     </div>
   </div>
 
   <main id="dashboard" class="shell hidden" aria-hidden="true">
-    <header class="hero card">
+    <header class="hero glass-card">
       <div>
         <p class="eyebrow">FIFA World Cup 2026 • USA</p>
         <h1>WM 2026 Reiseplanung</h1>
-        <p class="muted">Reisefenster: NYC (24.07–27.07.2026) · Boston (28.07–02.08.2026) · Dallas (28.07–02.08.2026)</p>
+        <p class="muted">Kompakt planen: Stadt wählen, Wetter prüfen, Spots speichern.</p>
       </div>
       <div class="hero-actions">
-        <div id="countdown" class="kpi-pill">Countdown lädt …</div>
+        <p class="meta-chip">Reisefenster Juni/Juli 2026</p>
+        <p id="countdown" class="kpi-pill">Countdown lädt…</p>
         <button id="logoutBtn" class="btn btn-secondary">Logout</button>
       </div>
     </header>
 
     <section>
-      <h2>Städteübersicht</h2>
+      <div class="section-head">
+        <h2>Wetterüberblick</h2>
+      </div>
+      <div id="weatherCards" class="weather-grid"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Städte</h2>
+      </div>
       <div id="cityCards" class="city-grid"></div>
     </section>
 
     <section>
-      <h2>Wetterübersicht</h2>
-      <div id="weatherCards" class="weather-grid"></div>
+      <div id="quickStats" class="quick-grid"></div>
     </section>
   </main>
 
