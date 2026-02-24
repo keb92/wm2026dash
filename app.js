@@ -48,7 +48,7 @@
     container.innerHTML = Object.values(window.CITY_DATA).map((city) => {
       const c = city.points;
       return `
-        <a href="${city.cityKey}.html" class="city-card" style="background-image:linear-gradient(180deg, rgba(10,18,35,.15), rgba(10,18,35,.75)),url('${city.heroImage}')">
+        <a href="${city.cityKey}.html" class="city-card" style="background-image:linear-gradient(180deg, rgba(3,9,20,.35), rgba(4,10,24,.88)),url('${city.heroImage}')">
           <div class="city-card-top">
             <h3>${city.cityName}</h3>
             <span class="meta-chip">${formatDateRange(city.dateRange)}</span>
@@ -59,7 +59,9 @@
             <span>🍻 ${countByCategory(c, "Soccer Pub")}</span>
             <span>🍽️ ${countByCategory(c, "Restaurant")}</span>
             <span>🌮 ${countByCategory(c, "Food Spot")}</span>
+            <span>🎉 ${countByCategory(c, "Fan Hub")}</span>
           </div>
+          <p class="tiny-meta city-microcopy">FIFA Fan Festival = zentraler Fan-Hub</p>
           <span class="btn btn-primary">Stadt öffnen</span>
         </a>`;
     }).join("");

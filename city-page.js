@@ -41,6 +41,7 @@
       <h3>${point.name}</h3>
       <p>${point.address || "Keine Adresse"}</p>
       <p class="muted">${point.notes || ""}</p>
+      <p class="tiny-meta">${point.approx ? "Koordinate approx." : "Koordinate verifiziert"} · Quelle: ${point.sourceType || "n/a"}</p>
     </div>`;
   }
 
@@ -51,7 +52,7 @@
       .filter(([key]) => key !== "Custom")
       .map(([_, cfg]) => `<div class="legend-row"><span class="dot" style="background:${cfg.color}">${cfg.icon}</span>${cfg.label}</div>`)
       .join("");
-    legend.innerHTML = `<h3>Legende</h3>${rows}<div class="legend-row"><span class="dot" style="background:${window.CATEGORY_CONFIG.Custom.color}">⭐</span>Eigene Einträge</div>`;
+    legend.innerHTML = `<h3>Legende</h3>${rows}<div class="legend-row"><span class="dot" style="background:${window.CATEGORY_CONFIG.Custom.color}">⭐</span>Eigene Einträge</div><p class="tiny-meta">FIFA Fan Festival: zentrale Fan-Destination.</p>`;
   }
 
   function initCityPage() {
@@ -89,10 +90,15 @@
       const fallback = document.getElementById("mapFallback");
       const status = document.getElementById("mapStatus");
 
+      let hasTileLoad = false;
       const tiles = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: "&copy; OpenStreetMap"
       }).addTo(map);
+
+      tiles.on("tileload", () => {
+        hasTileLoad = true;
+      });
 
       tiles.on("tileerror", (event) => {
         console.error("Tile-Layer Fehler", event);
@@ -106,6 +112,16 @@
       map.on("load", () => {
         fallback?.classList.add("hidden");
       });
+
+      setTimeout(() => {
+        if (!hasTileLoad) {
+          fallback?.classList.remove("hidden");
+          if (status) {
+            status.classList.remove("hidden");
+            status.textContent = "Karte lädt verzögert. Verbindung prüfen und ggf. neu laden.";
+          }
+        }
+      }, 4500);
 
       const layerGroups = {};
       Object.keys(window.CATEGORY_CONFIG).forEach((category) => {
