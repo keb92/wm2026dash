@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WM 2026 Reiseplanung</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="dashboard">
+  <div id="loginOverlay" class="overlay">
+    <div class="login-card card">
+      <h1>WM 2026 Reiseplanung</h1>
+      <p class="muted">Komfortschutz für die Roadtrip-Planung</p>
+      <form id="loginForm" novalidate>
+        <label for="passwordInput">Passwort</label>
+        <input id="passwordInput" type="password" placeholder="Passwort eingeben" autocomplete="current-password" required />
+        <button type="submit" class="btn btn-primary">Dashboard entsperren</button>
+        <p id="loginError" class="error-msg" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <main id="dashboard" class="shell hidden" aria-hidden="true">
+    <header class="hero card">
+      <div>
+        <p class="eyebrow">FIFA World Cup 2026 • USA</p>
+        <h1>WM 2026 Reiseplanung</h1>
+        <p class="muted">Reisefenster: NYC (24.07–27.07.2026) · Boston (28.07–02.08.2026) · Dallas (28.07–02.08.2026)</p>
+      </div>
+      <div class="hero-actions">
+        <div id="countdown" class="kpi-pill">Countdown lädt …</div>
+        <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+      </div>
+    </header>
+
+    <section>
+      <h2>Städteübersicht</h2>
+      <div id="cityCards" class="city-grid"></div>
+    </section>
+
+    <section>
+      <h2>Wetterübersicht</h2>
+      <div id="weatherCards" class="weather-grid"></div>
+    </section>
+  </main>
+
+  <script src="city-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
